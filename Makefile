@@ -1,4 +1,4 @@
-CFLAGS = -Ideps/uv/include -Wall -Wextra
+CFLAGS = -Ideps/uv/include -Wall -Wextra -Wno-unused-parameter
 LDFLAGS = -lm -lrt
 
 .PHONY:	all clean
