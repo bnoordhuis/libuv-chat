@@ -1,357 +1,309 @@
 <!doctype html>  
 <html lang="en">
-	
-	<head>
-		<meta charset="utf-8">
-		
-		<title>reveal.js - The HTML Presentation Framework</title>
+  <head>
+    <meta charset="utf-8">
+    <title>libuv</title>
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <link rel="stylesheet" href="hl/styles/github.css">
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <style type="text/css">
+    .small {
+      font-size: 50% !important;
+    }
+    .smallish {
+      font-size: 75% !important;
+    }
+    </style>
+  </head>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+  <body>
+    <div class="reveal">
+      <div class="slides">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-		
-		<link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-		
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+        <section>
+          <h1>libuv</h1>
+          <h3>the little library that could</h3>
+          <h4>or:</h4>
+          <h3>doing chat apps the hard way since 2011</h3>
+          <hr>
+          <a href='https://github.com/joyent/libuv'>
+            https://github.com/joyent/libuv
+          </a>
+          <br>
+          <br>
+          <a href='https://github.com/bnoordhuis/libuv-chat'>
+            https://github.com/bnoordhuis/libuv-chat
+          </a>
+        </section>
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+        <section>
+          <h2>what is libuv?</h2>
+          <ul>
+            <li>async network and file I/O</li>
+            <li>cross-platform</li>
+            <li>written in C</li>
+            <li>smallish, ±40K lines of code</li>
+            <li>supports epoll, kqueue, event ports, IOCP</li>
+          </ul>
+          <aside class='notes'>
+          * platforms: Windows, Linux, OS X, Solaris, FreeBSD, OpenBSD, NetBSD,
+            DragonFlyBSD - still working on the MINIX and Plan9 ports.
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+          * C for portability, ease of writing bindings
+          </aside>
+        </section>
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-	</head>
-	
-	<body>
-		
-		<div class="reveal">
+        <section>
+          <h2>who uses libuv?</h2>
+          <ul>
+            <li>node.js - <a href='http://nodejs.org/'>http://nodejs.org/</a></li>
+            <li>luvit - <a href='http://luvit.io/'>http://luvit.io/</a></li>
+            <li>rust - <a href='http://www.rust-lang.org/'>http://www.rust-lang.org/</a></li>
+            <li>julia - <a href='http://julialang.org/'>http://julialang.org/</a></li>
+            <li>and more...</li>
+          </ul>
+          <hr>
+          <a href='https://github.com/joyent/libuv/wiki/Projects-that-use-libuv'>
+            https://github.com/joyent/libuv/wiki/Projects-that-use-libuv
+          </a>
+        </section>
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+        <section>
+          <h2>my first chat app</h2>
+          build:
+<pre><code>
+$ git clone git://github.com/bnoordhuis/libuv-chat.git
+$ cd libuv-chat
+$ make
+</code></pre>
 
-				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
-				</section>
-				
-				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with 
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-					<p>
-						<i><small>- <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small></i>
-					</p>
+          run:
+<pre><code>
+$ ./chat-server
+Listening at 0.0.0.0:8000
+</code></pre>
 
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you run the speaker notes server.
-					</aside>
-				</section>
-				
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#/2/1">down</a>.
-						</p>
-						<a href="#/2/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+          use:
+<pre><code>
+$ netcat 127.0.0.1 8000
+* Madison Noah joined from 127.0.0.1:50668
+hello?
+Madison Noah said: hello?
+Mason Ava said: howdy, handsome stranger
+</code></pre>
+        </section>
 
-				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview. Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
-				</section>
+        <section>
+          <h3>layout</h3>
+<pre><code>
+$ ls .
+deps/           src/              Makefile    build.gyp
 
-				<section>
-					<h2>rvl.io</h2>
-					<p>
-						If you don't like writing slides in HTML you can use the online editor <a href="http://www.rvl.io" target="_blank">rvl.io</a>.
-					</p>
-				</section>
+$ ls src/
+main.c
 
-				<section>
-					<h2>Works in Mobile Safari</h2>
-					<p>
-						Try it out! You can swipe through the slides and pinch your way to the overview.
-					</p>
-				</section>
+$ ls deps/uv/
+uv.gyp          config-mingw.mk   gyp_uv      config-unix.mk
+LICENSE         include           test/       vcbuild.bat
+AUTHORS         src/              Makefile    README.md
+</code></pre>
+        </section>
 
-				<section>
-					<h2>Marvelous Unordered List</h2>
-					<ul>
-						<li>No order here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-						<li>Or here</li>
-					</ul>
-				</section>
-				
-				<section>
-					<h2>Fantastic Ordered List</h2>
-					<ol>
-						<li>One is smaller than...</li>
-						<li>Two is smaller than...</li>
-						<li>Three!</li>
-					</ol>
-				</section>
+        <section>
+          <h3>Makefile</h3>
+<!-- intentionally swapped around to fool the syntax highlighter -->
+<code><pre style='color:#000;background:#f8f8ff'>
+CFLAGS = -Ideps/uv/include -Wall -Wextra -Wno-unused-parameter
+LDFLAGS = -lm
 
-				<section data-markdown>
-					<script type="text/template">
-						## Markdown support
-						
-						For those of you who like that sort of thing. Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
+ifeq ($(shell uname),Darwin)
+LDFLAGS += -framework CoreServices
+endif
 
-							<section data-markdown>
-							  ## Markdown support
+ifeq ($(shell uname),Linux)
+LDFLAGS += -lrt
+endif
 
-							  For those of you who like that sort of thing. 
-							  Instructions and a bit more info available [here](https://github.com/hakimel/reveal.js#markdown).
-							</section>
-					</script>
-				</section>
+.PHONY:  all clean
 
-				<section id="transitions">
-					<h2>Transition Styles</h2>
-					<p>
-						You can select from different transitions, like: <br>
-						<a href="?transition=cube#/transitions">Cube</a> -
-						<a href="?transition=page#/transitions">Page</a> -
-						<a href="?transition=concave#/transitions">Concave</a> -
-						<a href="?transition=zoom#/transitions">Zoom</a> - 
-						<a href="?transition=linear#/transitions">Linear</a> - 
-						<a href="?transition=none#/transitions">None</a> - 
-						<a href="?#/transitions">Default</a>
-					</p>
-				</section>
+all:  chat-server
 
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?#/themes">Default</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
+clean:
+  rm -f chat-server src/main.o
+  $(MAKE) $@ -C deps/uv
 
-				<section>
-					<section data-state="alert">
-						<h2>Global State</h2>
-						<p>
-							Set <code>data-state="something"</code> on a slide and <code>"something"</code>
-							will be added as a class to the document element when the slide is open. This lets you
-							apply broader style changes, like switching the background.
-						</p>
-						<a href="#/7/1" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="blackout">
-						<h2>"blackout"</h2>
-						<a href="#/7/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-state="soothe">
-						<h2>"soothe"</h2>
-						<a href="#/7/0" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
-				</section>
+chat-server:  src/main.o deps/uv/libuv.a
+  $(CC) $^ -o $@ $(LDFLAGS)
 
-				<section data-state="customevent">
-					<h2>Custom Events</h2>
-					<p>
-						Additionally custom events can be triggered on a per slide basis by binding to the <code>data-state</code> name.
-					</p>
-					<pre><code contenteditable style="font-size: 18px; margin-top: 20px;">Reveal.addEventListener( 'customevent', function() {
-	console.log( '"customevent" has fired' );
-} );
-					</code></pre>
-				</section>
+deps/uv/libuv.a:
+  $(MAKE) all -C deps/uv
+</pre></code>
+        </section>
 
-				<section>
-					<h2>Clever Quotes</h2>
-					<p>
-						These guys come in two forms, inline: <q cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						The nice thing about standards is that there are so many to choose from</q> and block:
-					</p>
-					<blockquote cite="http://searchservervirtualization.techtarget.com/definition/Our-Favorite-Technology-Quotations">
-						For years there has been a theory that millions of monkeys typing at random on millions of typewriters would 
-						reproduce the entire works of Shakespeare. The Internet has proven this theory to be untrue.
-					</blockquote>
-				</section>
-				
-				<section>
-					<h2>Pretty Code</h2>
-					<pre><code contenteditable>
-function linkify( selector ) {
-  if( supports3DTransforms ) {
-    
-    var nodes = document.querySelectorAll( selector );
+        <section>
+          <h3>GYP</h3>
+<pre><code class='python'>
+{
+  'targets': [
+    {
+      'target_name': 'chat-server',
+      'type': 'executable',
+      'dependencies': ['deps/uv/uv.gyp:libuv'],
+      'sources': ['src/main.c'],
+    }
+  ]
+}
+</code></pre>
+<pre><code>
+$ gyp -Dlibrary=static_library --depth=$PWD -f make build.gyp
+$ make
+</code></pre>
+          <div>
+            GYP = Generate Your Projects
+          </div>
+          <div class='smallish'>
+            xcode, msvs, eclipse, scons, ninja, make
+          </div>
+          <a href='http://code.google.com/p/gyp/'>
+            http://code.google.com/p/gyp/
+          </a>
+        </section>
 
-    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
-      var node = nodes[i];
+        <section>
+          <h3>main()</h3>
+<pre><code>
+// ...
+uv_tcp_init(uv_default_loop(), &server_handle);
 
-      if( !node.className ) ) {
-        node.className += ' roll';
-      }
-    };
+// ...
+uv_tcp_bind(&server_handle, uv_ip4_addr("0.0.0.0", 8000));
+
+// ...
+uv_listen((uv_stream_t*) &server_handle, backlog, on_connection);
+
+// ...
+uv_run(uv_default_loop());
+</code></pre>
+        </section>
+
+        <section>
+          <h3>on_connection()</h3>
+<pre><code>
+// ...
+struct user *user = malloc(sizeof(*user));
+uv_tcp_init(uv_default_loop(), &user->handle);
+
+// ...
+uv_accept(server_handle, (uv_stream_t*) &user->handle);
+
+// ...
+uv_read_start((uv_stream_t*) &user->handle, on_alloc, on_read);
+
+// ...
+broadcast("* %s joined from %s\n", user->id, addr_and_port(user));
+</code></pre>
+        </section>
+
+        <section>
+          <h3>on_read()</h3>
+<pre><code>
+// ...
+if (nread == -1) {
+  uv_close((uv_handle_t*) &user->handle, on_close);
+  broadcast("* %s has left the building\n", user->id);
+  return;
+}
+
+// ...
+broadcast("%s said: %.*s", user->id, (int) nread, buf.base);
+</code></pre>
+        </section>
+
+        <section>
+          <h3>broadcast()</h3>
+<pre><code>
+static void broadcast(const char *fmt, ...)
+{
+  ngx_queue_t *q;
+  char msg[512];
+  va_list ap;
+
+  va_start(ap, fmt);
+  vsnprintf(msg, sizeof(msg), fmt, ap);
+  va_end(ap);
+
+  ngx_queue_foreach(q, &users) {
+    struct user *user = container_of(q, struct user, queue);
+    unicast(user, msg);
   }
 }
-					</code></pre>
-					<p>Courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
-				</section>
-				
-				<section>
-					<h2>Intergalactic Interconnections</h2>
-					<p>
-						You can link between slides internally,
-						<a href="#/2/3">like this</a>.
-					</p>
-				</section>
+</code></pre>
+        </section>
 
-				<section>
-					<h2>Fragmented Views</h2>
-					<p>Hit the next arrow...</p>
-					<p class="fragment">... to step through ...</p>
-					<ol>
-						<li class="fragment"><code>any type</code></li>
-						<li class="fragment"><em>of view</em></li>
-						<li class="fragment"><strong>fragments</strong></li>
-					</ol>
-				</section>
-				
-				<section>
-					<h2>Spectacular image!</h2>
-					<a class="image" href="http://lab.hakim.se/meny/" target="_blank">
-						<img width="320" height="299" src="http://s3.amazonaws.com/hakim-static/portfolio/images/meny.png" alt="Meny">
-					</a>
-				</section>
-				
-				<section>
-					<h2>Export to PDF</h2>
-					<p>Presentations can be <a href="https://github.com/hakimel/reveal.js#pdf-export">exported to PDF</a>, below is an example that's been uploaded to SlideShare.</p>
-					<iframe id="slideshare" src="http://www.slideshare.net/slideshow/embed_code/13872948" width="455" height="356" style="margin:0;overflow:hidden;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe>
-					<script>
-						document.getElementById('slideshare').attributeName = 'allowfullscreen';
-					</script>
-				</section>
-				
-				<section>
-					<h2>Take a Moment</h2>
-					<p>
-						Press b or period on your keyboard to enter the 'paused' mode. This mode is helpful when you want to take disctracting slides off the screen 
-						during a presentation.
-					</p>
-				</section>
 
-				<section>
-					<h2>Stellar Links</h2>
-					<ul>
-						<li><a href="https://github.com/hakimel/reveal.js">Source code on GitHub</a></li>
-						<li><a href="http://hakim.se/projects/reveal-js">Leave feedback on my site</a></li>
-						<li><a href="http://twitter.com/hakimel">Follow me on Twitter</a></li>
-					</ul>
-				</section>
+        <section>
+          <h3>unicast()</h3>
+<pre><code>
+static void unicast(struct user *user, const char *msg)
+{
+  uv_write_t *req = malloc(sizeof(*req));
+  uv_buf_t buf = uv_buf_init(strdup(msg), strlen(msg));
+  uv_write(req, (uv_stream_t*) &user->handle, &buf, 1, on_write);
+  req->data = buf.base; // save pointer for later
+}
+</code></pre>
+        </section>
 
-				<section>
-					<h2>It's free</h2>
-					<p>
-						reveal.js and <a href="http://www.rvl.io">rvl.io</a> are entirely free but if you'd like to support the projects you can donate below. 
-						Donations will go towards hosting and domain costs.
-					</p>
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-						<input type="hidden" name="cmd" value="_donations">
-						<input type="hidden" name="business" value="hakim.elhattab@gmail.com">
-						<input type="hidden" name="lc" value="US">
-						<input type="hidden" name="item_name" value="reveal.js / rvl.io">
-						<input type="hidden" name="no_note" value="0">
-						<input type="hidden" name="currency_code" value="USD">
-						<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-						<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-					</form>
-				</section>
-				
-				<section>
-					<h1>THE END</h1>
-					<h3>BY Hakim El Hattab / hakim.se</h3>
-				</section>
+        <section>
+          <h3>on_write()</h3>
+<pre><code>
+static void on_write(uv_write_t *req, int status)
+{
+  free(req->data);
+  free(req);
+}
+</code></pre>
+        </section>
 
-			</div>
-			
-		</div>
+        <section>
+          <h1>the end</h1>
+        </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
+      </div>
+    </div>
 
-		<script>
-			
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-					{ src: 'plugin/zoom-js/zoom.js', condition: function() { return !!document.body.classList; } },
-					{ src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
-					{ src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
-				]
-			});
-			
-		</script>
+    <script>
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        theme: 'default',
+        transition: 'default',
+        dependencies: [
+          { src: 'lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/zoom-js/zoom.js', condition: function() { return !!document.body.classList; } },
+          { src: '/socket.io/socket.io.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } },
+          { src: 'plugin/speakernotes/client.js', async: true, condition: function() { return window.location.host === 'localhost:1947'; } }
+        ]
+      });
+    </script>
 
-	</body>
+  </body>
 </html>
