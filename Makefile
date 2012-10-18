@@ -13,7 +13,15 @@
 # OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 CFLAGS = -Ideps/uv/include -Wall -Wextra -Wno-unused-parameter
-LDFLAGS = -lm -lrt
+LDFLAGS = -lm
+
+ifeq ($(shell uname),Darwin)
+LDFLAGS += -framework CoreServices
+endif
+
+ifeq ($(shell uname),Linux)
+LDFLAGS += -lrt
+endif
 
 .PHONY:	all clean
 
