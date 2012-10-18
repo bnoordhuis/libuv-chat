@@ -1,2 +1,6 @@
 /chat-server
+/gyp-mac-tool
+/out/
 *.[ao]
+*.mk
+*.Makefile
